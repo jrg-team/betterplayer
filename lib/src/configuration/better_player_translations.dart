@@ -39,11 +39,11 @@ class BetterPlayerTranslations {
   factory BetterPlayerTranslations.chinese() => BetterPlayerTranslations(
         languageCode: "zh",
         generalDefaultError: "无法播放视频",
-        generalNone: "没有",
+        generalNone: "暂无",
         generalDefault: "默认",
         playlistLoadingNextVideo: "正在加载下一个视频",
         controlsLive: "直播",
-        controlsNextVideoIn: "下一部影片n",
+        controlsNextVideoIn: "下一段视频",
         overflowMenuPlaybackSpeed: "播放速度",
         overflowMenuSubtitles: "字幕",
         overflowMenuQuality: "质量",
