@@ -9,6 +9,12 @@ class BetterPlayerControlsConfiguration {
   ///Color of the control bars
   final Color controlBarColor;
 
+  ///gradient of the control bars
+  final Gradient controlBarGradient;
+
+  ///gradient of the control bars
+  final Gradient topBarGradient;
+
   ///Color of texts
   final Color textColor;
 
@@ -115,6 +121,11 @@ class BetterPlayerControlsConfiguration {
 
   ///Flag used to show/hide audio tracks
   final bool enableAudioTracks;
+  ///Flag used to show/hide Navigate back button
+  final bool enableNavback;
+
+  ///Flag userd to lock action
+  final bool enableActionLock;
 
   ///Custom items of overflow menu
   final List<BetterPlayerOverflowMenuItem> overflowMenuCustomItems;
@@ -163,6 +174,8 @@ class BetterPlayerControlsConfiguration {
 
   const BetterPlayerControlsConfiguration({
     this.controlBarColor = Colors.black87,
+    this.controlBarGradient,
+    this.topBarGradient,
     this.textColor = Colors.white,
     this.iconsColor = Colors.white,
     this.playIcon = Icons.play_arrow_outlined,
@@ -198,6 +211,8 @@ class BetterPlayerControlsConfiguration {
     this.enableQualities = true,
     this.enablePip = true,
     this.enableRetry = true,
+    this.enableNavback = false,
+    this.enableActionLock = false,
     this.overflowMenuCustomItems = const [],
     this.overflowMenuIcon = Icons.more_vert_outlined,
     this.pipMenuIcon = Icons.picture_in_picture_outlined,

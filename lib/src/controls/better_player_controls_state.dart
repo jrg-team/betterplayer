@@ -8,8 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///Base class for both material and cupertino controls
-abstract class BetterPlayerControlsState<T extends StatefulWidget>
-    extends State<T> {
+abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State<T> {
   ///Min. time of buffered video to hide loading timer (in milliseconds)
   static const int _bufferingInterval = 20000;
 
@@ -71,22 +70,19 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
           children: [
             if (betterPlayerControlsConfiguration.enablePlaybackSpeed)
               _buildMoreOptionsListRow(
-                  betterPlayerControlsConfiguration.playbackSpeedIcon,
-                  translations.overflowMenuPlaybackSpeed, () {
+                  betterPlayerControlsConfiguration.playbackSpeedIcon, translations.overflowMenuPlaybackSpeed, () {
                 Navigator.of(context).pop();
                 _showSpeedChooserWidget();
               }),
             if (betterPlayerControlsConfiguration.enableSubtitles)
               _buildMoreOptionsListRow(
-                  betterPlayerControlsConfiguration.subtitlesIcon,
-                  translations.overflowMenuSubtitles, () {
+                  betterPlayerControlsConfiguration.subtitlesIcon, translations.overflowMenuSubtitles, () {
                 Navigator.of(context).pop();
                 _showSubtitlesSelectionWidget();
               }),
             if (betterPlayerControlsConfiguration.enableQualities)
               _buildMoreOptionsListRow(
-                  betterPlayerControlsConfiguration.qualitiesIcon,
-                  translations.overflowMenuQuality, () {
+                  betterPlayerControlsConfiguration.qualitiesIcon, translations.overflowMenuQuality, () {
                 Navigator.of(context).pop();
                 _showQualitiesSelectionWidget();
               }),
@@ -98,7 +94,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
                 _showAudioTracksSelectionWidget();
               }),
             if (betterPlayerControlsConfiguration
-                .overflowMenuCustomItems.isNotEmpty)
+                .overflowMenuCustomItems?.isNotEmpty)
               ...betterPlayerControlsConfiguration.overflowMenuCustomItems.map(
                 (customItem) => _buildMoreOptionsListRow(
                   customItem.icon,
@@ -115,8 +111,10 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
     );
   }
 
-  Widget _buildMoreOptionsListRow(
-      IconData icon, String name, void Function() onTap) {
+  Widget _buildMoreOptionsListRow(IconData icon, String name, void Function() onTap) {
+    assert(icon != null, "Icon can't be null");
+    assert(name != null, "Name can't be null");
+    assert(onTap != null, "OnTap can't be null");
     return BetterPlayerMaterialClickableWidget(
       onTap: onTap,
       child: Padding(
@@ -176,7 +174,10 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
             const SizedBox(width: 16),
             Text(
               "$value x",
-              style: _getOverflowMenuElementTextStyle(isSelected),
+              style: TextStyle(
+                  fontWeight: betterPlayerController.videoPlayerController.value.speed == value
+                      ? FontWeight.bold
+                      : FontWeight.normal),
             )
           ],
         ),
@@ -201,9 +202,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
       if (bufferedEndPosition != null) {
         final difference = bufferedEndPosition - position;
 
-        if (latestValue.isPlaying &&
-            latestValue.isBuffering &&
-            difference.inMilliseconds < _bufferingInterval) {
+        if (latestValue.isPlaying && latestValue.isBuffering && difference.inMilliseconds < _bufferingInterval) {
           return true;
         }
       }
@@ -222,13 +221,25 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
           type: BetterPlayerSubtitlesSourceType.none));
     }
 
-    _showModalBottomSheet(
-        subtitles.map((source) => _buildSubtitlesSourceRow(source)).toList());
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            child: Column(
+              children: subtitles.map((source) => _buildSubtitlesSourceRow(source)).toList(),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildSubtitlesSourceRow(BetterPlayerSubtitlesSource subtitlesSource) {
-    final selectedSourceType =
-        betterPlayerController!.betterPlayerSubtitlesSource;
+    assert(subtitlesSource != null, "SubtitleSource can't be null");
+
+    final selectedSourceType = betterPlayerController!.betterPlayerSubtitlesSource;
     final bool isSelected = (subtitlesSource == selectedSourceType) ||
         (subtitlesSource.type == BetterPlayerSubtitlesSourceType.none &&
             subtitlesSource.type == selectedSourceType!.type);
@@ -254,9 +265,10 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
             Text(
               subtitlesSource.type == BetterPlayerSubtitlesSourceType.none
                   ? betterPlayerController!.translations.generalNone
-                  : subtitlesSource.name ??
-                      betterPlayerController!.translations.generalDefault,
-              style: _getOverflowMenuElementTextStyle(isSelected),
+                  : subtitlesSource.name ?? betterPlayerController.translations.generalDefault,
+              style: TextStyle(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
             ),
           ],
         ),
