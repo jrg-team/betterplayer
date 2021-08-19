@@ -13,6 +13,12 @@ class BetterPlayerControlsConfiguration {
   ///Color of the control bars
   final Color controlBarColor;
 
+  ///gradient of the control bars
+  final Gradient controlBarGradient;
+
+  ///gradient of the control bars
+  final Gradient topBarGradient;
+
   ///Color of texts
   final Color textColor;
 
@@ -77,8 +83,7 @@ class BetterPlayerControlsConfiguration {
   final Duration controlsHideTime;
 
   ///Parameter used to build custom controls
-  final Widget Function(BetterPlayerController controller)
-      customControlsBuilder;
+  final Widget Function(BetterPlayerController controller) customControlsBuilder;
 
   ///Parameter used to change theme of the player
   final BetterPlayerTheme playerTheme;
@@ -110,6 +115,12 @@ class BetterPlayerControlsConfiguration {
 
   ///Flag used to show/hide PiP mode
   final bool enablePip;
+
+  ///Flag used to show/hide Navigate back button
+  final bool enableNavback;
+
+  ///Flag userd to lock action
+  final bool enableActionLock;
 
   ///Custom items of overflow menu
   final List<BetterPlayerOverflowMenuItem> overflowMenuCustomItems;
@@ -146,6 +157,8 @@ class BetterPlayerControlsConfiguration {
 
   const BetterPlayerControlsConfiguration({
     this.controlBarColor = Colors.black87,
+    this.controlBarGradient,
+    this.topBarGradient,
     this.textColor = Colors.white,
     this.iconsColor = Colors.white,
     this.playIcon = Icons.play_arrow,
@@ -178,6 +191,8 @@ class BetterPlayerControlsConfiguration {
     this.enableSubtitles = true,
     this.enableQualities = true,
     this.enablePip = true,
+    this.enableNavback = false,
+    this.enableActionLock = false,
     this.overflowMenuCustomItems = const [],
     this.overflowMenuIcon = Icons.more_vert,
     this.pipMenuIcon = Icons.picture_in_picture,
