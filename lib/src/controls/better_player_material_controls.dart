@@ -70,6 +70,26 @@ class _BetterPlayerMaterialControlsState extends BetterPlayerControlsState<Bette
   BetterPlayerControlsConfiguration get betterPlayerControlsConfiguration => _controlsConfiguration;
 
   @override
+  void onShowMoreClicked() {
+    if (_controlsConfiguration.moreOptionsWidget != null) {
+      showModalBottomSheet<void>(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        builder: (context) {
+          return SafeArea(
+            top: false,
+            child: _controlsConfiguration.moreOptionsWidget,
+          );
+        },
+      );
+    } else {
+      super.onShowMoreClicked();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     _wasLoading = isLoading(_latestValue);
     if (_latestValue?.hasError == true) {
@@ -184,7 +204,7 @@ class _BetterPlayerMaterialControlsState extends BetterPlayerControlsState<Bette
     if (_controlsConfiguration.enableNavback) {
       current = Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [BackButton(), current],
+        children: [BackButton(color: Colors.white), current],
       );
     }
     if (_controlsConfiguration.topBarGradient != null) {
@@ -405,7 +425,8 @@ class _BetterPlayerMaterialControlsState extends BetterPlayerControlsState<Bette
                 child: Container(
                     child: Padding(
                         padding: EdgeInsets.all(8),
-                        child: Icon(_isActionLocked ? Icons.lock_outline : Icons.lock_open, size: 20)),
+                        child: Icon(_isActionLocked ? Icons.lock_outline : Icons.lock_open,
+                            size: 20, color: Colors.white)),
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(6), color: Color.fromRGBO(0, 0, 0, 0.4))))),
       )

@@ -351,11 +351,17 @@ class BetterPlayerController extends ChangeNotifier {
 
   Future<void> seekTo(Duration moment) async {
     await videoPlayerController.seekTo(moment);
+    final currentVideoPlayerValue = videoPlayerController.value;
 
-    _postEvent(
-        BetterPlayerEvent(BetterPlayerEventType.seekTo, parameters: <String, dynamic>{_durationParameter: moment}));
+    _postEvent(BetterPlayerEvent(BetterPlayerEventType.seekTo, parameters: <String, dynamic>{
+      _progressParameter: moment,
+      _durationParameter: videoPlayerController.value.duration
+    }));
     if (moment > videoPlayerController.value.duration) {
-      _postEvent(BetterPlayerEvent(BetterPlayerEventType.finished));
+      _postEvent(BetterPlayerEvent(BetterPlayerEventType.finished, parameters: <String, dynamic>{
+        _progressParameter: currentVideoPlayerValue.position,
+        _durationParameter: currentVideoPlayerValue.duration
+      }));
     } else {
       cancelNextVideoTimer();
     }
