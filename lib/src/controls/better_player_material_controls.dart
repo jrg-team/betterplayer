@@ -641,31 +641,32 @@ class _BetterPlayerMaterialControlsState extends BetterPlayerControlsState<Bette
     });
   }
 
-  void _onPlayPause() {
+  void _onPlayPause() async {
     bool isFinished = false;
 
     if (_latestValue?.position != null && _latestValue?.duration != null) {
       isFinished = _latestValue.position >= _latestValue.duration;
     }
 
-    setState(() {
-      if (_controller.value.isPlaying) {
+    if (_controller.value.isPlaying) {
+      setState(() {
         _hideStuff = false;
         _hideTimer?.cancel();
         _betterPlayerController.pause();
-      } else {
-        cancelAndRestartTimer();
+      });
+    } else {
+      cancelAndRestartTimer();
 
-        if (!_controller.value.initialized) {
-        } else {
-          if (isFinished) {
-            _betterPlayerController.seekTo(const Duration());
-          }
+      if (_controller.value.initialized) {
+        if (isFinished) {
+          await _betterPlayerController.seekTo(const Duration());
+        }
+        setState(() {
           _betterPlayerController.play();
           _betterPlayerController.cancelNextVideoTimer();
-        }
+        });
       }
-    });
+    }
   }
 
   void _startHideTimer() {

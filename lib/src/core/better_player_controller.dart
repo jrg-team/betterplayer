@@ -53,6 +53,7 @@ class BetterPlayerController extends ChangeNotifier {
   bool get isFullScreen => _isFullScreen;
 
   int _lastPositionSelection = 0;
+  int _lastFinished = 0;
 
   BetterPlayerDataSource _betterPlayerDataSource;
 
@@ -351,6 +352,7 @@ class BetterPlayerController extends ChangeNotifier {
 
   Future<void> seekTo(Duration moment) async {
     await videoPlayerController.seekTo(moment);
+    print('更新seekTo');
     final currentVideoPlayerValue = videoPlayerController.value;
 
     _postEvent(BetterPlayerEvent(BetterPlayerEventType.seekTo, parameters: <String, dynamic>{
@@ -451,6 +453,25 @@ class BetterPlayerController extends ChangeNotifier {
     }
 
     final int now = DateTime.now().millisecondsSinceEpoch;
+
+    if (currentVideoPlayerValue.position != null &&
+        currentVideoPlayerValue.duration != null &&
+        currentVideoPlayerValue.position >= currentVideoPlayerValue.duration &&
+        (now - _lastFinished > 500)) {
+      _lastFinished = now;
+      print("发finished事件");
+      _postEvent(
+        BetterPlayerEvent(
+          BetterPlayerEventType.finished,
+          parameters: <String, dynamic>{
+            _progressParameter: currentVideoPlayerValue.position,
+            _durationParameter: currentVideoPlayerValue.duration
+          },
+        ),
+      );
+      return;
+    }
+
     if (now - _lastPositionSelection > 500) {
       _lastPositionSelection = now;
       final Duration currentPositionShifted =
@@ -458,28 +479,15 @@ class BetterPlayerController extends ChangeNotifier {
       if (currentPositionShifted == null || currentVideoPlayerValue.duration == null) {
         return;
       }
-
-      if (currentPositionShifted > currentVideoPlayerValue.duration) {
-        _postEvent(
-          BetterPlayerEvent(
-            BetterPlayerEventType.finished,
-            parameters: <String, dynamic>{
-              _progressParameter: currentVideoPlayerValue.position,
-              _durationParameter: currentVideoPlayerValue.duration
-            },
-          ),
-        );
-      } else {
-        _postEvent(
-          BetterPlayerEvent(
-            BetterPlayerEventType.progress,
-            parameters: <String, dynamic>{
-              _progressParameter: currentVideoPlayerValue.position,
-              _durationParameter: currentVideoPlayerValue.duration
-            },
-          ),
-        );
-      }
+      _postEvent(
+        BetterPlayerEvent(
+          BetterPlayerEventType.progress,
+          parameters: <String, dynamic>{
+            _progressParameter: currentVideoPlayerValue.position,
+            _durationParameter: currentVideoPlayerValue.duration
+          },
+        ),
+      );
     }
   }
 
