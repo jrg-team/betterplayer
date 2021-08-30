@@ -668,7 +668,7 @@ class _BetterPlayerMaterialControlsState extends BetterPlayerControlsState<Bette
     });
   }
 
-  void _onPlayPause() {
+  void _onPlayPause() async {
     bool isFinished = false;
 
     if (_latestValue?.position != null && _latestValue?.duration != null) {

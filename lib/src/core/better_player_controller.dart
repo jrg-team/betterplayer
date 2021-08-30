@@ -65,6 +65,7 @@ class BetterPlayerController {
 
   ///Time when last progress event was sent
   int _lastPositionSelection = 0;
+  int _lastFinished = 0;
 
   ///Currently used data source in player.
   BetterPlayerDataSource? _betterPlayerDataSource;
@@ -646,6 +647,7 @@ class BetterPlayerController {
   ///Move player to specific position/moment of the video.
   Future<void> seekTo(Duration moment) async {
     await videoPlayerController.seekTo(moment);
+    print('更新seekTo');
     final currentVideoPlayerValue = videoPlayerController.value;
 
     _postEvent(BetterPlayerEvent(BetterPlayerEventType.seekTo, parameters: <String, dynamic>{
@@ -792,8 +794,32 @@ class BetterPlayerController {
     }
 
     final int now = DateTime.now().millisecondsSinceEpoch;
+
+    if (currentVideoPlayerValue.position != null &&
+        currentVideoPlayerValue.duration != null &&
+        currentVideoPlayerValue.position >= currentVideoPlayerValue.duration &&
+        (now - _lastFinished > 500)) {
+      _lastFinished = now;
+      print("发finished事件");
+      _postEvent(
+        BetterPlayerEvent(
+          BetterPlayerEventType.finished,
+          parameters: <String, dynamic>{
+            _progressParameter: currentVideoPlayerValue.position,
+            _durationParameter: currentVideoPlayerValue.duration
+          },
+        ),
+      );
+      return;
+    }
+
     if (now - _lastPositionSelection > 500) {
       _lastPositionSelection = now;
+      final Duration currentPositionShifted =
+          Duration(milliseconds: currentVideoPlayerValue!.position!.inMilliseconds + 500);
+      if (currentPositionShifted == null || currentVideoPlayerValue.duration == null) {
+        return;
+      }
       _postEvent(
         BetterPlayerEvent(
           BetterPlayerEventType.progress,
