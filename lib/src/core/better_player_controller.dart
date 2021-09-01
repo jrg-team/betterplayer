@@ -177,7 +177,8 @@ class BetterPlayerController extends ChangeNotifier {
 
     /// Load hls tracks
     if (_betterPlayerDataSource?.useHlsTracks == true && betterPlayerDataSource.url.contains(_hlsExtension)) {
-      _betterPlayerTracks = await BetterPlayerHlsUtils.parseTracks(betterPlayerDataSource.url);
+      _betterPlayerTracks =
+          await BetterPlayerHlsUtils.parseTracks(betterPlayerDataSource.url, betterPlayerDataSource.headers);
     }
 
     /// Load hls subtitles
