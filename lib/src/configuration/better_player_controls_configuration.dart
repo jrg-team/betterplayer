@@ -83,7 +83,7 @@ class BetterPlayerControlsConfiguration {
   final Duration controlsHideTime;
 
   ///Parameter used to build custom controls
-  final Widget Function(BetterPlayerController controller) customControlsBuilder;
+  final Widget Function(BuildContext context, BetterPlayerController controller) customControlsBuilder;
 
   ///Parameter used to change theme of the player
   final BetterPlayerTheme playerTheme;
@@ -155,8 +155,8 @@ class BetterPlayerControlsConfiguration {
   ///Widget which can be used instead of default progress
   final Widget loadingWidget;
 
-  ///Widget which can be used instead of default
-  final Widget moreOptionsWidget;
+  ///Widget which click more option indicator
+  final void Function(BuildContext context, BetterPlayerController controller) onShowMoreClicked;
 
   const BetterPlayerControlsConfiguration(
       {this.controlBarColor = Colors.black87,
@@ -207,7 +207,7 @@ class BetterPlayerControlsConfiguration {
       this.backwardSkipTimeInMilliseconds = 15000,
       this.loadingColor = Colors.black,
       this.loadingWidget,
-      this.moreOptionsWidget});
+      this.onShowMoreClicked});
 
   factory BetterPlayerControlsConfiguration.white() {
     return const BetterPlayerControlsConfiguration(

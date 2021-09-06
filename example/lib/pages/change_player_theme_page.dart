@@ -17,8 +17,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
   void initState() {
     super.initState();
     String url = Constants.bugBuckBunnyVideoUrl;
-    _dataSource =
-        BetterPlayerDataSource(BetterPlayerDataSourceType.network, url);
+    _dataSource = BetterPlayerDataSource(BetterPlayerDataSourceType.network, url);
     _betterPlayerController = new BetterPlayerController(
       BetterPlayerConfiguration(
         autoDispose: true,
@@ -62,8 +61,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
                       _betterPlayerController = new BetterPlayerController(
                         BetterPlayerConfiguration(
                           autoDispose: true,
-                          controlsConfiguration:
-                              BetterPlayerControlsConfiguration(
+                          controlsConfiguration: BetterPlayerControlsConfiguration(
                             playerTheme: _playerTheme,
                           ),
                         ),
@@ -81,8 +79,7 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
                       _betterPlayerController = new BetterPlayerController(
                         BetterPlayerConfiguration(
                           autoDispose: true,
-                          controlsConfiguration:
-                              BetterPlayerControlsConfiguration(
+                          controlsConfiguration: BetterPlayerControlsConfiguration(
                             playerTheme: _playerTheme,
                           ),
                         ),
@@ -100,11 +97,9 @@ class _ChangePlayerThemePageState extends State<ChangePlayerThemePage> {
                       _betterPlayerController = new BetterPlayerController(
                         BetterPlayerConfiguration(
                           autoDispose: true,
-                          controlsConfiguration:
-                              BetterPlayerControlsConfiguration(
+                          controlsConfiguration: BetterPlayerControlsConfiguration(
                             playerTheme: _playerTheme,
-                            customControlsBuilder: (controller) =>
-                                CustomControlsWidget(
+                            customControlsBuilder: (context, controller) => CustomControlsWidget(
                               controller: controller,
                             ),
                           ),

@@ -71,19 +71,8 @@ class _BetterPlayerMaterialControlsState extends BetterPlayerControlsState<Bette
 
   @override
   void onShowMoreClicked() {
-    if (_controlsConfiguration.moreOptionsWidget != null) {
-      showModalBottomSheet<void>(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        builder: (context) {
-          return SafeArea(
-            top: false,
-            child: _controlsConfiguration.moreOptionsWidget,
-          );
-        },
-      );
+    if (_controlsConfiguration.onShowMoreClicked != null) {
+      _controlsConfiguration.onShowMoreClicked(context, betterPlayerController);
     } else {
       super.onShowMoreClicked();
     }
