@@ -172,8 +172,8 @@ class BetterPlayerControlsConfiguration {
   ///Color of text in bottom modal sheet used for overflow menu items.
   final Color overflowModalTextColor;
 
-  ///Widget which can be used instead of default
-  final Widget moreOptionsWidget;
+  ///Widget which click more option indicator
+  final void Function(BuildContext context, BetterPlayerController controller) onShowMoreClicked;
 
   const BetterPlayerControlsConfiguration({
     this.controlBarColor = Colors.black87,
@@ -233,6 +233,7 @@ class BetterPlayerControlsConfiguration {
       this.moreOptionsWidget,
       this.overflowModalColor = Colors.white,
       this.overflowModalTextColor = Colors.black,
+      this.onShowMoreClicked
     });
 
   factory BetterPlayerControlsConfiguration.white() {

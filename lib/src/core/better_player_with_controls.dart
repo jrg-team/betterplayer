@@ -16,8 +16,7 @@ class BetterPlayerWithControls extends StatefulWidget {
   const BetterPlayerWithControls({Key? key, this.controller}) : super(key: key);
 
   @override
-  _BetterPlayerWithControlsState createState() =>
-      _BetterPlayerWithControlsState();
+  _BetterPlayerWithControlsState createState() => _BetterPlayerWithControlsState();
 }
 
 class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
@@ -27,8 +26,7 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
   BetterPlayerControlsConfiguration get controlsConfiguration =>
       widget.controller!.betterPlayerControlsConfiguration;
 
-  final StreamController<bool> playerVisibilityStreamController =
-      StreamController();
+  final StreamController<bool> playerVisibilityStreamController = StreamController();
 
   bool _initialized = false;
 
@@ -69,8 +67,7 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
 
   @override
   Widget build(BuildContext context) {
-    final BetterPlayerController betterPlayerController =
-        BetterPlayerController.of(context);
+    final BetterPlayerController betterPlayerController = BetterPlayerController.of(context);
 
     double? aspectRatio;
     if (betterPlayerController.isFullScreen) {
@@ -82,8 +79,7 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
             betterPlayerController.videoPlayerController?.value.aspectRatio ??
                 1.0;
       } else {
-        aspectRatio = betterPlayerController
-                .betterPlayerConfiguration.fullScreenAspectRatio ??
+        aspectRatio = betterPlayerController.betterPlayerConfiguration.fullScreenAspectRatio ??
             BetterPlayerUtils.calculateAspectRatio(context);
       }
     } else {
@@ -108,8 +104,7 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
     }
   }
 
-  Container _buildPlayerWithControls(
-      BetterPlayerController betterPlayerController, BuildContext context) {
+  Container _buildPlayerWithControls(BetterPlayerController betterPlayerController, BuildContext context) {
     final configuration = betterPlayerController.betterPlayerConfiguration;
     var rotation = configuration.rotation;
 
@@ -137,8 +132,7 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
               betterPlayerController.getFit(),
             ),
           ),
-          betterPlayerController.betterPlayerConfiguration.overlay ??
-              Container(),
+          betterPlayerController.betterPlayerConfiguration.overlay ?? Container(),
           BetterPlayerSubtitlesDrawer(
             betterPlayerController: betterPlayerController,
             betterPlayerSubtitlesConfiguration: subtitlesConfiguration,
@@ -217,8 +211,7 @@ class _BetterPlayerVideoFitWidget extends StatefulWidget {
   final BoxFit boxFit;
 
   @override
-  _BetterPlayerVideoFitWidgetState createState() =>
-      _BetterPlayerVideoFitWidgetState();
+  _BetterPlayerVideoFitWidgetState createState() => _BetterPlayerVideoFitWidgetState();
 }
 
 class _BetterPlayerVideoFitWidgetState
@@ -237,8 +230,7 @@ class _BetterPlayerVideoFitWidgetState
   @override
   void initState() {
     super.initState();
-    if (!widget.betterPlayerController.betterPlayerConfiguration
-        .showPlaceholderUntilPlay) {
+    if (!widget.betterPlayerController.betterPlayerConfiguration.showPlaceholderUntilPlay) {
       _started = true;
     } else {
       _started = widget.betterPlayerController.hasCurrentDataSourceStarted;
@@ -282,8 +274,7 @@ class _BetterPlayerVideoFitWidgetState
       if (event == BetterPlayerControllerEvent.play) {
         if (!_started) {
           setState(() {
-            _started =
-                widget.betterPlayerController.hasCurrentDataSourceStarted;
+            _started = widget.betterPlayerController.hasCurrentDataSourceStarted;
           });
         }
       }

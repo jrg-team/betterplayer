@@ -800,7 +800,6 @@ class BetterPlayerController {
         currentVideoPlayerValue.position >= currentVideoPlayerValue.duration &&
         (now - _lastFinished > 500)) {
       _lastFinished = now;
-      print("发finished事件");
       _postEvent(
         BetterPlayerEvent(
           BetterPlayerEventType.finished,
