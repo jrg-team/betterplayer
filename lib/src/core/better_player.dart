@@ -101,6 +101,7 @@ class BetterPlayerState extends State<BetterPlayer> with WidgetsBindingObserver 
       await _pushFullScreenWidget(context);
     } else if (_isFullScreen && !controller.cancelFullScreenDismiss) {
       Navigator.of(context, rootNavigator: true).pop();
+
       _isFullScreen = false;
     }
 

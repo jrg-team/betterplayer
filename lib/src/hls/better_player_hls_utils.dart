@@ -27,6 +27,8 @@ class BetterPlayerHlsUtils {
           },
         );
       }
+      print('wwwww');
+      print(parsedPlaylist);
     } catch (exception) {
       BetterPlayerUtils.log("Exception on parseSubtitles: $exception");
     }
@@ -98,7 +100,6 @@ class BetterPlayerHlsUtils {
       await response.transform(const Utf8Decoder()).listen((content) {
         data += content.toString();
       }).asFuture<String>();
-
       return data;
     } catch (exception) {
       BetterPlayerUtils.log("GetDataFromUrl failed: $exception");
