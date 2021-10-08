@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:developer' as developer;
 import 'dart:io';
 import 'dart:math';
 
@@ -72,7 +73,11 @@ class _BetterPlayerWithControlsState extends State<BetterPlayerWithControls> {
     final BetterPlayerController betterPlayerController = BetterPlayerController.of(context);
 
     double aspectRatio;
-    if (betterPlayerController.isFullScreen) {
+
+    final querySize = MediaQuery.of(context).size;
+    bool isLandscape = querySize.height < querySize.width;
+
+    if (betterPlayerController.isFullScreen || isLandscape) {
       if (betterPlayerController.betterPlayerConfiguration.autoDetectFullscreenDeviceOrientation) {
         aspectRatio = betterPlayerController?.videoPlayerController?.value?.aspectRatio ?? 1.0;
       } else {
