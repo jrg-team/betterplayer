@@ -201,6 +201,7 @@ class BetterPlayerState extends State<BetterPlayer> with WidgetsBindingObserver 
     Wakelock.disable();
 
     await SystemChrome.setEnabledSystemUIOverlays(_betterPlayerConfiguration.systemOverlaysAfterFullScreen);
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     await SystemChrome.setPreferredOrientations(_betterPlayerConfiguration.deviceOrientationsAfterFullScreen);
   }
 
