@@ -94,6 +94,7 @@ class _BetterPlayerState extends State<BetterPlayer>
       BetterPlayerUtils.log(exception.toString());
     }
     widget.controller.setupTranslations(locale);
+    Wakelock.enable();
   }
 
   @override
@@ -115,6 +116,8 @@ class _BetterPlayerState extends State<BetterPlayer>
     widget.controller.dispose();
     VisibilityDetectorController.instance
         .forget(Key("${widget.controller.hashCode}_key"));
+    Wakelock.disable();
+
     super.dispose();
   }
 
