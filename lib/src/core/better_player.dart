@@ -70,6 +70,7 @@ class BetterPlayerState extends State<BetterPlayer> with WidgetsBindingObserver 
     widget.controller.addListener(onFullScreenChanged);
     var locale = const Locale('zh', 'CN');
     widget.controller.setupTranslations(locale);
+    Wakelock.enable();
   }
 
   @override
@@ -81,6 +82,8 @@ class BetterPlayerState extends State<BetterPlayer> with WidgetsBindingObserver 
     if (widget.controller.betterPlayerPlaylistConfiguration == null) {
       widget.controller.dispose();
     }
+
+    Wakelock.disable();
 
     super.dispose();
   }
