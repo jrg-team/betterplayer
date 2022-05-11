@@ -93,8 +93,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State
                 Navigator.of(context).pop();
                 _showAudioTracksSelectionWidget();
               }),
-            if (betterPlayerControlsConfiguration
-                .overflowMenuCustomItems?.isNotEmpty)
+            if (betterPlayerControlsConfiguration.overflowMenuCustomItems.isNotEmpty)
               ...betterPlayerControlsConfiguration.overflowMenuCustomItems.map(
                 (customItem) => _buildMoreOptionsListRow(
                   customItem.icon,
@@ -112,9 +111,6 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State
   }
 
   Widget _buildMoreOptionsListRow(IconData icon, String name, void Function() onTap) {
-    assert(icon != null, "Icon can't be null");
-    assert(name != null, "Name can't be null");
-    assert(onTap != null, "OnTap can't be null");
     return BetterPlayerMaterialClickableWidget(
       onTap: onTap,
       child: Padding(
@@ -175,7 +171,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State
             Text(
               "$value x",
               style: TextStyle(
-                  fontWeight: betterPlayerController.videoPlayerController.value.speed == value
+                  fontWeight: betterPlayerController?.videoPlayerController?.value.speed == value
                       ? FontWeight.bold
                       : FontWeight.normal),
             )
@@ -237,8 +233,6 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State
   }
 
   Widget _buildSubtitlesSourceRow(BetterPlayerSubtitlesSource subtitlesSource) {
-    assert(subtitlesSource != null, "SubtitleSource can't be null");
-
     final selectedSourceType = betterPlayerController!.betterPlayerSubtitlesSource;
     final bool isSelected = (subtitlesSource == selectedSourceType) ||
         (subtitlesSource.type == BetterPlayerSubtitlesSourceType.none &&
@@ -265,7 +259,7 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget> extends State
             Text(
               subtitlesSource.type == BetterPlayerSubtitlesSourceType.none
                   ? betterPlayerController!.translations.generalNone
-                  : subtitlesSource.name ?? betterPlayerController.translations.generalDefault,
+                  : subtitlesSource.name ?? betterPlayerController?.translations.generalDefault ?? '',
               style: TextStyle(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),

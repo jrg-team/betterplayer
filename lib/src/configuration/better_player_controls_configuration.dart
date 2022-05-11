@@ -10,10 +10,10 @@ class BetterPlayerControlsConfiguration {
   final Color controlBarColor;
 
   ///gradient of the control bars
-  final Gradient controlBarGradient;
+  final Gradient? controlBarGradient;
 
   ///gradient of the control bars
-  final Gradient topBarGradient;
+  final Gradient? topBarGradient;
 
   ///Color of texts
   final Color textColor;
@@ -173,7 +173,7 @@ class BetterPlayerControlsConfiguration {
   final Color overflowModalTextColor;
 
   ///Widget which click more option indicator
-  final void Function(BuildContext context, BetterPlayerController controller) onShowMoreClicked;
+  final void Function(BuildContext context, BetterPlayerController controller)? onShowMoreClicked;
 
   const BetterPlayerControlsConfiguration({
     this.controlBarColor = Colors.black87,
@@ -226,11 +226,10 @@ class BetterPlayerControlsConfiguration {
       this.overflowMenuIconsColor = Colors.black,
       this.forwardSkipTimeInMilliseconds = 15000,
       this.backwardSkipTimeInMilliseconds = 15000,
-      this.loadingColor = Colors.black,
+      this.loadingColor = Colors.white,
       this.backgroundColor = Colors.black,
 
       this.loadingWidget,
-      this.moreOptionsWidget,
       this.overflowModalColor = Colors.white,
       this.overflowModalTextColor = Colors.black,
       this.onShowMoreClicked
